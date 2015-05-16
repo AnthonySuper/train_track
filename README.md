@@ -12,6 +12,7 @@ If you want to help develop that, shoot us a pull request!
 Well, you could use those.
 In fact, for very simple tracking, those are probably better.
 However, that has some limitations:
+
 1. Doesn't fully work with collections: a has\_many is going to cause severe trouble for your code, since some methods will trigger before\_update and after\_update, while others won't.
 
 2. Will run on records updated by automated tasks, when you probably care more about what users are doing
