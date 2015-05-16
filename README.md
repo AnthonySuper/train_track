@@ -5,6 +5,8 @@ It doesn't make any decisions on how to do that.
 That part is up to you.
 All it does is provide some nice helpers to make that task easier.
 
+TrainTrack may gain features in the future that also manage the actual tracking side.
+If you want to help develop that, shoot us a pull request!
 ### Why not just use ActiveRecord callbacks?
 
 Well, you could use those.
@@ -74,7 +76,7 @@ Whereas in an update action, you probably want to manage multiple states:
 ### Trackers
 Now, all those calls to track are pretty useless right now.
 In order to make them do something, you have to specify a tracker.
-We recommend you put those in `/app/trackers`
+We recommend you put those in `/app/trackers/`
 
 A tracker looks like this:
 ```ruby
@@ -109,9 +111,24 @@ class ImageTracker < ApplicationTracker
 end
 ```
 
+Much like in [Pundit](https://github.com/elabs/pundit), a tracker is a PORO.
+This gives TrainTracks a higher level of flexibility.
+
+Also like in pundit, we infer the name of the tracker from the class name.
+If you want to over-ride this behavior, simple include a method called "train_tracks_name" on your record's class:
+
+```ruby
+class Noided < ActiveRecord::Base
+  def self.train_tracks_name
+    "Paranoid"
+  end
+end
+```
+Be careful: it has to start with a capital letter.
+
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/train_track/fork )
+1. Fork it ( https://github.com/AnthonySuper/train_track/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
