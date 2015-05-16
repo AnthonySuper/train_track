@@ -70,6 +70,45 @@ Whereas in an update action, you probably want to manage multiple states:
     end
   end
 ```
+
+### Trackers
+Now, all those calls to track are pretty useless right now.
+In order to make them do something, you have to specify a tracker.
+We recommend you put those in `/app/trackers`
+
+A tracker looks like this:
+```ruby
+class ImageTracker < ApplicationTracker
+  # user is taken from the `current_user` method on your controller
+  def initialize(user, record)
+    @user = user
+    @record = record
+  end
+  # Called on the create action
+  def create
+    # assuming we have a model called "ImageEdit" that tracks modifications of Images
+    ImageEdit.create(user: @user,
+                     image: @record,
+                     action: :created)
+  end
+
+  # Called on the first call to "track" in the edit action
+  def edit_before
+    @old_tags = @record.tags.pluck(&:id)
+  end
+
+  def edit_after
+    @new_tags = @record.tags.reload.pluck(&:id)
+    # Assuming ImageEdit makes use of Postgres' arrays 
+    ImageEdit.create(user: @user,
+                     image: @record,
+                     action: :edited,
+                     old_tags: @old_tags,
+                     new_tags: @new_tags)
+  end
+end
+```
+
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/train_track/fork )
