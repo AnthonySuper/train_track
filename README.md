@@ -1,6 +1,6 @@
 # :steam_locomotive: TrainTrack :steam_locomotive: 
 
-TrainTrack is a small helper gem to let you track things in your Ruby on Rails projects.
+TrainTrack is a gem that makes it easier to track changes in your rails projects.
 It doesn't make any decisions on how to do that.
 That part is up to you.
 All it does is provide some nice helpers to make that task easier.
@@ -13,7 +13,7 @@ Well, you could use those.
 In fact, for very simple tracking, those are probably better.
 However, that has some limitations:
 
-1. Doesn't fully work with collections: a has\_many is going to cause severe trouble for your code, since some methods will trigger before\_update and after\_update, while others won't.
+1. Doesn't fully work with collections: a `has_many` is going to cause severe trouble for your code, since some methods will trigger `before_update` and `after_update`, while others won't.
 
 2. Will run on records updated by automated tasks, when you probably care more about what users are doing
 
