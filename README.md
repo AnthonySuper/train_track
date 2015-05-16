@@ -1,8 +1,18 @@
-# TrainTrack
+# :steam_locomotive: TrainTrack :steam_locomotive: 
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/train_track`. To experiment with that code, run `bin/console` for an interactive prompt.
+TrainTrack is a small helper gem to let you track things in your Ruby on Rails projects.
+It doesn't make any decisions on how to do that.
+That part is up to you.
+All it does is provide some nice helpers to make that task easier.
 
-TODO: Delete this and the text above, and describe your gem
+### Why not just use ActiveRecord callbacks?
+
+Well, you could use those.
+In fact, for very simple tracking, those are probably better.
+However, that has some limitations:
+1. Doesn't fully work with collections: a has\_many is going to cause severe trouble for your code, since some methods will trigger before\_update and after\_update, while others won't.
+
+2. Will run on records updated by automated tasks, when you probably care more about what users are doing
 
 ## Installation
 
@@ -22,14 +32,44 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Include TrainTrack in your controller:
 
-## Development
+```ruby
+class ImagesController < ApplicationController
+  include TrainTrack
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
+end
+```
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release` to create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+Call the `record` method in the controller when there's a state you wish to track.
+What do I mean by this?
+Well, in the create method, you probably only want to track that it has been created
+```ruby
+  def create
+    i = Image.new(image_params)
+    if i.save
+      track i 
+      redirect_to i
+    else
+      # handle error
+    end
+  end
+```
 
+Whereas in an update action, you probably want to manage multiple states:
+
+```ruby
+  def edit
+    i = Image.find(params[:id])
+    track i 
+    if i.update(image_params)
+      track i
+      redirect_to i
+    else
+      # handle error
+    end
+  end
+```
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/train_track/fork )
