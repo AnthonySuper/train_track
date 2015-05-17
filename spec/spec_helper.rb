@@ -1,8 +1,8 @@
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'train_track'
 require 'codeclimate-test-reporter'
 CodeClimate::TestReporter.start
 
+require 'train_track'
+$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 ##
 # Dummy model to use for testing
 class Image
