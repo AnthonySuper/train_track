@@ -1,5 +1,6 @@
 # :steam_locomotive: TrainTrack :steam_locomotive: 
 
+[![Code Climate](https://codeclimate.com/github/AnthonySuper/train_track/badges/gpa.svg)](https://codeclimate.com/github/AnthonySuper/train_track)
 TrainTrack is a gem that makes it easier to track changes in your rails projects.
 It doesn't make any decisions on how to do that.
 That part is up to you.
