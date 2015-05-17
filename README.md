@@ -94,18 +94,21 @@ class ImageTracker < ApplicationTracker
   # Called on the create action
   def create
     # assuming we have a model called "ImageEdit" that tracks modifications of Images
+    # also assume that this uses Postgres' arrays
     ImageEdit.create(user: @user,
                      image: @record,
-                     action: :created)
+                     action: :created,
+                     old_tags: [],
+                     new_tags: @record.tags.pluck(:id))
   end
 
   # Called on the first call to "track" in the edit action
   def edit_before
-    @old_tags = @record.tags.pluck(&:id)
+    @old_tags = @record.tags.pluck(:id)
   end
 
   def edit_after
-    @new_tags = @record.tags.reload.pluck(&:id)
+    @new_tags = @record.tags.reload.pluck(:id)
     # Assuming ImageEdit makes use of Postgres' arrays 
     ImageEdit.create(user: @user,
                      image: @record,
