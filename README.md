@@ -140,6 +140,8 @@ class ElfmanSong < ActiveRecord::Base
       SoloTracker
   end
 end
+```
+
 ## Contributing
 
 1. Fork it ( https://github.com/AnthonySuper/train_track/fork )
