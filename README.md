@@ -116,17 +116,26 @@ Much like in [Pundit](https://github.com/elabs/pundit), a tracker is a PORO.
 This gives TrainTracks a higher level of flexibility.
 
 Also like in pundit, we infer the name of the tracker from the class name.
-If you want to over-ride this behavior, simple include a method called "train_tracks_name" on your record's class:
+If you want to over-ride this behavior, simple include a method called `train_tracker_class` on the class.
 
 ```ruby
 class Noided < ActiveRecord::Base
-  def self.train_tracks_name
-    "Paranoid"
+  def self.train_tracker_class
+    ParanoidTracker
   end
 end
 ```
-Be careful: it has to start with a capital letter.
-
+You can also define it as an instance method.
+This lets you do fancy things:
+```ruby
+class ElfmanSong < ActiveRecord::Base
+  def train_tracker_class
+    if band == "Oingo Boingo"
+      BoingoTracker
+    else
+      SoloTracker
+  end
+end
 ## Contributing
 
 1. Fork it ( https://github.com/AnthonySuper/train_track/fork )
