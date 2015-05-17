@@ -18,4 +18,29 @@ describe TrainTrack do
       expect(TrainTrack.tracker_class(Comment.new)).to eq(HackTracker)
     end
   end
+  describe "tracking" do
+    context "with the edit action" do
+      it "sends both the .edit_before and .edit_after messages" do
+        c = Controller.new(user, {action: :edit})
+        tracker_double = double("tracker")
+        # do some injection magic
+        # basically, TrainTrack normally creates a new instance of a tracker
+        # in this case we snipe that with our own double
+        # so we can test it more easily
+        c.instance_variable_set(:@_tracker, tracker_double)
+        expect(tracker_double).to receive(:edit_before)
+        expect(tracker_double).to receive(:edit_after)
+        c.edit
+      end
+    end
+    context "with arbitrary actions" do
+      it "sends the tracker the message of the action" do
+        c = Controller.new(user, {action: :new})
+        tracker_double = double("tracker")
+        c.instance_variable_set(:@_tracker, tracker_double)
+        expect(tracker_double).to receive(:new)
+        c.new
+      end
+    end
+  end
 end

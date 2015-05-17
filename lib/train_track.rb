@@ -16,9 +16,12 @@ module TrainTrack
   end
   ##
   # Methods to add to a controller when included
-  module ClassMethods
+  included do
+    ##
+    # Track a model
+    #
     def track(model)
-      @_tracker ||= tracker_class(model).new(user_method, model)
+      @_tracker ||= TrainTrack.tracker_class(model).new(user_method, model)
       if params[:action] == :edit && _tracker_times_called == 0
         @_tracker.edit_before
         @_tracker_times_called += 1

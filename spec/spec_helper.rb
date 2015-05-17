@@ -58,10 +58,17 @@ class Controller
   def initialize(current_user, params)
     @current_user = current_user
     @params = params
-    self.send(params[:action])
   end
 
   def edit
+    i = Image.new(["hack", "fraud"])
+    track i 
+    i.tags = ["foo", "bar"]
+    track i
   end
 
+  def new
+    i = Image.new(["hack", "fraud"])
+    track i
+  end
 end
