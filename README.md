@@ -66,7 +66,7 @@ Well, in the create method, you probably only want to track that it has been cre
 Whereas in an update action, you probably want to manage multiple states:
 
 ```ruby
-  def edit
+  def update
     i = Image.find(params[:id])
     track i 
     if i.update(image_params)
@@ -103,11 +103,11 @@ class ImageTracker < ApplicationTracker
   end
 
   # Called on the first call to "track" in the edit action
-  def edit_before
+  def update_before
     @old_tags = @record.tags.pluck(:id)
   end
 
-  def edit_after
+  def update_after
     @new_tags = @record.tags.reload.pluck(:id)
     # Assuming ImageEdit makes use of Postgres' arrays 
     ImageEdit.create(user: @user,

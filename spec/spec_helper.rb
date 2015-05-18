@@ -42,11 +42,11 @@ class ImageTracker
 
   end
 
-  def edit_before
+  def update_before
 
   end
 
-  def edit_atfter
+  def update_atfter
 
   end
 end
@@ -61,14 +61,14 @@ class Controller
     @params = params
   end
 
-  def edit
+  def update
     i = Image.new(["hack", "fraud"])
     track i 
     i.tags = ["foo", "bar"]
     track i
   end
 
-  def new
+  def create
     i = Image.new(["hack", "fraud"])
     track i
   end

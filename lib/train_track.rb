@@ -22,11 +22,11 @@ module TrainTrack
     #
     def track(model)
       @_tracker ||= TrainTrack.tracker_class(model).new(user_method, model)
-      if params[:action] == :edit && _tracker_times_called == 0
-        @_tracker.edit_before
+      if params[:action] == :update && _tracker_times_called == 0
+        @_tracker.update_before
         @_tracker_times_called += 1
-      elsif params[:action] == :edit && _tracker_times_called == 1
-        @_tracker.edit_after
+      elsif params[:action] == :update && _tracker_times_called == 1
+        @_tracker.update_after
       else
         @_tracker.send(params[:action])
       end
