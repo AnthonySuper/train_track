@@ -1,0 +1,9 @@
+Description:
+  Generates a new tracker for a model with the given name
+
+Example:
+  rails g traintracks:tracker user
+
+  This will create:
+    app/trackers/user_tracker.rb
+
